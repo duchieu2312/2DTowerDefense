@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
@@ -10,10 +11,12 @@ public class EnemyMovement : MonoBehaviour
 
     private Transform target;
     private int pathIndex = 0;
+    private float baseMoveSpeed;
 
     void Start()
     {
         target = LevelManager.main.path[pathIndex];
+        baseMoveSpeed = moveSpeed;
     }
 
     void Update()
@@ -24,6 +27,7 @@ public class EnemyMovement : MonoBehaviour
 
             if (pathIndex == LevelManager.main.path.Length)
             {
+                LevelManager.main.GameOver();
                 EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject);
                 return;
@@ -39,5 +43,21 @@ public class EnemyMovement : MonoBehaviour
         Vector2 direction = (target.position - transform.position).normalized;
 
         rb.linearVelocity = direction * moveSpeed;
+    }
+
+    public void ApplySlow(float slowAmount, float duration)
+    {
+        if (moveSpeed == baseMoveSpeed)
+        {
+            moveSpeed *= slowAmount;
+        }
+        StopAllCoroutines();
+        StartCoroutine(RemoveSlow(duration));
+    }
+
+    private IEnumerator RemoveSlow(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        moveSpeed = baseMoveSpeed;
     }
 }

@@ -9,7 +9,11 @@ public class Turret : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firingPoint;
     [SerializeField] private GameObject upgradeUI;
+    [SerializeField] private GameObject levelTextObject;
+    [SerializeField] private GameObject bpsTextObject;
+    [SerializeField] private GameObject rangeTextObject;
     [SerializeField] private Button upgradeButton;
+    [SerializeField] private Button sellButton;
 
     [Header("Attribute")]
     [SerializeField] private float targetingRange = 5f;
@@ -17,20 +21,22 @@ public class Turret : MonoBehaviour
     [SerializeField] private float bulletsPerSecond = 1f;
     [SerializeField] private int baseUpgradeCost = 100;
 
-    private float bpsBase;
-    private float targetingRangeBase;
-
     private Transform target;
     private float timeUntilFire;
+    private Text levelText;
+    private Text rangeText;
+    private Text bpsText;
 
-    private int level = 1;
+    private int level = 0;
 
     private void Start()
     {
-        bpsBase = bulletsPerSecond;
-        targetingRangeBase = targetingRange;
-
         upgradeButton.onClick.AddListener(Upgrade);
+        sellButton.onClick.AddListener(SellTurret);
+
+        levelText = levelTextObject.GetComponent<Text>();
+        rangeText = rangeTextObject.GetComponent<Text>();
+        bpsText = bpsTextObject.GetComponent<Text>();
     }
 
     private void Update()
@@ -95,6 +101,7 @@ public class Turret : MonoBehaviour
     public void OpenUpgradeUI ()
     {
         upgradeUI.SetActive(true);
+        UpdateUI();
     }
 
     public void CloseUpgradeUI ()
@@ -105,28 +112,59 @@ public class Turret : MonoBehaviour
 
     public void Upgrade()
     {
-        if (LevelManager.main.SpendCurrency(CalculateCost())) return;
+        if (level < 3 && LevelManager.main.SpendCurrency(CalculateCost()) == true)
+        {
+            level++;
+            bulletsPerSecond+=0.2f;
+            targetingRange+=0.2f;
+        } else
+        {
+            return;
+        }
 
-        level++;
-
-        bulletsPerSecond = CalculateBPS();
-        targetingRange = CalculateRange();
-
+        UpdateUI();
         CloseUpgradeUI();
     }
 
     private int CalculateCost()
     {
-        return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
+        if ( level == 0 )
+        {
+            return baseUpgradeCost;
+        } else
+        {
+            return baseUpgradeCost + (level * 50);
+        }
     }
+    private void UpdateUI()
+    {
+        if (levelText) levelText.text = "Level: " + level;
+        if (rangeText) rangeText.text = "Range: " + targetingRange.ToString("F1");
+        if (bpsText) bpsText.text = "BPS: " + bulletsPerSecond.ToString("F1");
 
-    private float CalculateBPS()
-    {
-        return bpsBase * Mathf.Pow(level, 0.6f);
+        if (level == 3) {
+            Text buttonText = upgradeButton.GetComponentInChildren<Text>();
+            buttonText.text = "Max Upgrade";
+        } else
+        {
+            Text buttonText = upgradeButton.GetComponentInChildren<Text>();
+            buttonText.text = "Upgrade (" + CalculateCost() + ")";
+        }
+
+        Text sellText = sellButton.GetComponentInChildren<Text>();
+        sellText.text = "Sell (" + CalculateSellPrice() + ")";
     }
-    private float CalculateRange()
+    public void SellTurret()
     {
-        return targetingRangeBase * Mathf.Pow(level, 0.4f);
+        int sellPrice = CalculateSellPrice();
+        LevelManager.main.IncreaseCurrency(sellPrice);
+
+        CloseUpgradeUI();
+        Destroy(gameObject);
+    }
+    private int CalculateSellPrice()
+    {
+        return (baseUpgradeCost + (level * 50)) - (level * 25);
     }
 
     private void OnDrawGizmosSelected()

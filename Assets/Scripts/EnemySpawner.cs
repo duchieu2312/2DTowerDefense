@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -64,7 +65,7 @@ public class EnemySpawner : MonoBehaviour
 
         isSpawning = true;
         enemiesLeftToSpawn = EnemiesPerWave();
-        eps = enemiesPerSecond;
+        eps = EnemiesPerSecond();
     }
 
     private void EndWave()
@@ -77,8 +78,19 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        int index = Random.Range(0, enemyPrefabs.Length);
-        GameObject prefabToSpawn = enemyPrefabs[index];
+        List<GameObject> availableEnemies = new List<GameObject>();
+
+        foreach (var enemy in enemyPrefabs)
+        {
+            Health enemyScript = enemy.GetComponent<Health>();
+            if (enemyScript != null && currentWave >= enemyScript.spawnWave)
+            {
+                availableEnemies.Add(enemy);
+            }
+        }
+
+        int index = Random.Range(0, availableEnemies.Count);
+        GameObject prefabToSpawn = availableEnemies[index];
         Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
     }
 
@@ -86,8 +98,9 @@ public class EnemySpawner : MonoBehaviour
     {
         return Mathf.RoundToInt(baseEnemies * Mathf.Pow(currentWave, difficultyScalingFactor));
     }
-    private int EnemiesPerSecond()
+
+    private float EnemiesPerSecond()
     {
-        return Mathf.RoundToInt(Mathf.Clamp(enemiesPerSecond * Mathf.Pow(currentWave, difficultyScalingFactor), 0f, enemiesPerSecondCap));
+        return Mathf.Clamp(enemiesPerSecond * Mathf.Pow(currentWave, difficultyScalingFactor), 0f, enemiesPerSecondCap);
     }
 }

@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -7,11 +9,14 @@ public class LevelManager : MonoBehaviour
     public Transform startPoint;
     public Transform[] path;
 
+    [Header("References")]
+    [SerializeField] private GameObject gameOverPanel;
+
     public int currency;
 
     private void Awake()
     {
-       main = this; 
+       main = this;
     }
 
     private void Start()
@@ -35,5 +40,22 @@ public class LevelManager : MonoBehaviour
             Debug.Log("You do not have enough to purchase this item");
             return false;
         }
+    }
+    public void GameOver()
+    {
+        gameOverPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void RetryGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void BackToMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 }
