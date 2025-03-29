@@ -5,7 +5,9 @@ public class Plot : MonoBehaviour
     [Header("References")]
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Color hoverColor;
-    
+    [SerializeField] private AudioSource placeTurretSoundEffect;
+    [SerializeField] private AudioSource clickUpgradeTurretSoundEffect;
+
     private GameObject towerObj;
     public Turret turret;
     private Color startColor;
@@ -32,6 +34,7 @@ public class Plot : MonoBehaviour
         if (towerObj != null)
         {
             turret.OpenUpgradeUI();
+            clickUpgradeTurretSoundEffect.Play();
             return;
         }
 
@@ -41,6 +44,7 @@ public class Plot : MonoBehaviour
         {
             towerObj = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
             turret = towerObj.GetComponent<Turret>();
+            placeTurretSoundEffect.Play();
         }
     }
 }

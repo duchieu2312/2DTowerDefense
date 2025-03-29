@@ -5,6 +5,7 @@ public class EnemyMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     [Header("Attributes")]
     [SerializeField] private float moveSpeed = 2f;
@@ -34,6 +35,10 @@ public class EnemyMovement : MonoBehaviour
             } else
             {
                 target = LevelManager.main.path[pathIndex];
+                if (target.position.x > transform.position.x)
+                    spriteRenderer.flipX = true;
+                else
+                    spriteRenderer.flipX = false; ;
             }
         }
     }

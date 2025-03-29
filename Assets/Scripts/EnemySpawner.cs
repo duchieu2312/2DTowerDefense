@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float timeBetweenWaves = 5f;
     [SerializeField] private float difficultyScalingFactor = 0.75f;
     [SerializeField] private float enemiesPerSecondCap = 15f;
+    [SerializeField] private AudioSource completedWaveSoundEffect;
 
     [Header("Events")]
     public static UnityEvent onEnemyDestroy = new UnityEvent();
@@ -73,6 +74,7 @@ public class EnemySpawner : MonoBehaviour
         isSpawning = false;
         timeSinceLastSpawn = 0f;
         currentWave++;
+        completedWaveSoundEffect.Play();
         StartCoroutine(StartWave());
     }
 

@@ -14,6 +14,9 @@ public class Turret : MonoBehaviour
     [SerializeField] private GameObject rangeTextObject;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button sellButton;
+    [SerializeField] private AudioSource shootSoundEffect;
+    [SerializeField] private AudioSource upgradeSoundEffect;
+    [SerializeField] private AudioSource sellSoundEffect;
 
     [Header("Attribute")]
     [SerializeField] private float targetingRange = 5f;
@@ -74,6 +77,7 @@ public class Turret : MonoBehaviour
         GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
         bulletScript.SetTarget(target);
+        shootSoundEffect.Play();
     }
 
     private void FindTarget()
@@ -117,6 +121,7 @@ public class Turret : MonoBehaviour
             level++;
             bulletsPerSecond+=0.2f;
             targetingRange+=0.2f;
+            upgradeSoundEffect.Play();
         } else
         {
             return;
@@ -158,9 +163,10 @@ public class Turret : MonoBehaviour
     {
         int sellPrice = CalculateSellPrice();
         LevelManager.main.IncreaseCurrency(sellPrice);
+        sellSoundEffect.Play();
 
         CloseUpgradeUI();
-        Destroy(gameObject);
+        Destroy(gameObject, sellSoundEffect.clip.length);
     }
     private int CalculateSellPrice()
     {

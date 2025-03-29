@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -11,6 +10,8 @@ public class LevelManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private AudioSource gameOverSoundEffect;
+    [SerializeField] private AudioSource notEnoughMoneySoundEffect;
 
     public int currency;
 
@@ -38,12 +39,14 @@ public class LevelManager : MonoBehaviour
         } else
         {
             Debug.Log("You do not have enough to purchase this item");
+            notEnoughMoneySoundEffect.Play();
             return false;
         }
     }
     public void GameOver()
     {
         gameOverPanel.SetActive(true);
+        gameOverSoundEffect.Play();
         Time.timeScale = 0f;
     }
 
