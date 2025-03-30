@@ -35,6 +35,8 @@ This is a simple 2D Tower Defense game built using Unity. The primary goal of th
 - Improved UI/UX
 - Boss enemies and an eventual game ending
 - Better game balancing for fair and engaging difficulty
+- Performance optimization for smoother gameplay
+- Cleaner and more maintainable code
 
 ## Contributions
 This project is mainly for learning purposes, but contributions are welcome! Feel free to submit pull requests or suggest improvements.
