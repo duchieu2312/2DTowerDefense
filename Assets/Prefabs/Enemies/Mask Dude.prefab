@@ -183,7 +183,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.33, y: 6.49, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7514793473876224640}
@@ -233,7 +233,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1409377701681601660, guid: d2de0d5d65de6fe4c819bae5f4e4c117, type: 3}
+  m_Sprite: {fileID: 7166236263522030466, guid: 97d5ce53f3ac76e4888319c6a53c7ff3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 4438130706073718558}
   spriteRenderer: {fileID: 8860773974912484056}
-  moveSpeed: 2
+  moveSpeed: 1
 --- !u!114 &-8389495174946680476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,11 +334,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984f724c0404e4e4ea97fbc5f9d6d883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 2
-  currencyWorth: 25
+  hitPoints: 50
+  currencyWorth: 100
   healthBar: {fileID: 1958469992819761179}
   deathSoundEffect: {fileID: 1060375139724259966}
-  spawnWave: 1
+  spawnWave: 10
 --- !u!95 &5037593801797363573
 Animator:
   serializedVersion: 7
@@ -349,7 +349,7 @@ Animator:
   m_GameObject: {fileID: 5729576019440661505}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f1b18f14b9d75a840be913e2c5ab7ba1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 413aa74f9ef77e748884172f4f868c31, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

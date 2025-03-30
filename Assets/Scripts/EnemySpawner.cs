@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private GameObject wavesTextObject;
 
     [Header("Attributes")]
     [SerializeField] private int baseEnemies = 8;
@@ -25,6 +27,7 @@ public class EnemySpawner : MonoBehaviour
     private int enemiesLeftToSpawn;
     private float eps; // Enemies Per Second
     private bool isSpawning = false;
+    private Text WavesText;
 
     private void Awake()
     {
@@ -32,6 +35,7 @@ public class EnemySpawner : MonoBehaviour
     }
     private void Start()
     {
+        WavesText = wavesTextObject.GetComponent<Text>();
         StartCoroutine(StartWave());
     }
 
@@ -74,6 +78,7 @@ public class EnemySpawner : MonoBehaviour
         isSpawning = false;
         timeSinceLastSpawn = 0f;
         currentWave++;
+        WavesText.text = "Wave: " + currentWave;
         completedWaveSoundEffect.Play();
         StartCoroutine(StartWave());
     }

@@ -827,7 +827,7 @@ MonoBehaviour:
   shootSoundEffect: {fileID: -9044118821314859583}
   upgradeSoundEffect: {fileID: -757533127175917228}
   sellSoundEffect: {fileID: 5996662418655209716}
-  targetingRange: 3
+  targetingRange: 3.5
   rotationSpeed: 300
   bulletsPerSecond: 1
   baseUpgradeCost: 100
@@ -1200,7 +1200,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Damage: 1'
+  m_Text: 'Damage: 3'
 --- !u!1 &6208335658919537362
 GameObject:
   m_ObjectHideFlags: 0
