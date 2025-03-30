@@ -334,7 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984f724c0404e4e4ea97fbc5f9d6d883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 15
+  hitPoints: 20
   currencyWorth: 20
   healthBar: {fileID: 1958469992819761179}
   deathSoundEffect: {fileID: 1060375139724259966}
