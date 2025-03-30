@@ -1,4 +1,6 @@
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -175,7 +177,9 @@ public class Turret : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        #if UNITY_EDITOR
         Handles.color = Color.red;
         Handles.DrawWireDisc(transform.position, transform.forward, targetingRange);
+        #endif
     }
 }
